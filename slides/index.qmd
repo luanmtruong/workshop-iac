@@ -1,0 +1,61 @@
+---
+title: "Introduction to Infrastructure as Code (IaC)"
+author: "Luan Truong"
+format:
+  revealjs:
+    css: custom.css
+    navigation-mode: vertical
+    title-slide-no-content: true
+    title-slide-attributes:
+      data-background-color: "#141226"
+      data-background-transition: slide
+---
+
+# Traditional infrastructure deployment
+
+# Problem With Manual Management
+- Prone to human error
+- Time-consuming
+- Difficult to track changes and maintain consistency
+
+#  What exactly is Infrastructure as Code anyway?
+
+::: {.notes}
+Picture this: instead of manually clicking through endless setup screens or running commands till your fingers hurt, you write a few lines of code, hit "run," and voila! Your entire infrastructure springs to life. That's IaC in a nutshell.
+Gone are the days of "Bob's the only one who knows how to set up the staging environment" or "Why does production look different from dev?" With IaC, your infrastructure becomes as manageable as your application code. Version control? Check. Reproducibility? You bet. Collaboration? Absolutely!
+:::
+
+# Why should you care?
+- Consistency across environments (dev, staging, prod)
+- Faster deployment and scalability
+- Cost savings
+- Easily version-controlled via Git
+
+# IaC Tools {.nostretch background-transition="slide"}
+
+![](assets/iac-tools.png){fig-align="center"}
+
+# Here's how it works:
+
+1. You write code describing your infrastructure.
+2. Terraform says, "Cool, here's what I'm gonna do."
+3. You say "yes", and Terraform makes it happen.
+
+## Show me the code!
+```{.tf code-line-numbers="|1|5"}
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+}
+```
+
+# Thank you
+
+_Any questions?_
+
+<br>
+<br>

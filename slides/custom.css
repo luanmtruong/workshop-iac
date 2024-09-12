@@ -1,0 +1,27 @@
+.v-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.v-center-container > .column {
+    vertical-align: middle;
+}
+.reveal .slide h1 {
+  font-size: 1.3em;
+  line-height: 1em;
+}
+.reveal .slides section ul,
+.reveal .slides section ul li {
+    line-height: 1em; /* Adjust this value as needed */
+}
+
+.reveal .slides section * {
+  line-height: 1em;
+}
+
+.reveal .slides section .fragment {
+    margin-bottom: -30px; /* Reduce or remove bottom margin */
+    padding-bottom: 0; /* Reduce or remove bottom padding */
+}
