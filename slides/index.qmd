@@ -1,48 +1,67 @@
 ---
-title: "Introduction to Infrastructure as Code (IaC)"
-author: "Luan Truong"
+title: "Infrastructure Provisioning"
+image: preview.png
 format:
   revealjs:
     css: custom.css
     navigation-mode: vertical
     title-slide-no-content: true
     title-slide-attributes:
-      data-background-color: "#141226"
+      data-background-image: preview.png
       data-background-transition: slide
+    logo: logo.png
 ---
 
-# Traditional infrastructure deployment
+# Infrastructure provisioning {background-image="assets/background.png"}
+::: {.fragment}
+- Manual provisioning
+:::
+::: {.fragment}
+- Automated provisioning (via IaC)
+:::
 
-# Problem With Manual Management
+::: {.notes}
+is the process of setting up and configuring necessary resources such as servers, networks, hard drives to support software or service running. In the process of setting up, there will be physical servers and virtual servers, cloud
+:::
+
+# Problem With Manual Provisioning {background-image="assets/background.png"}
 - Prone to human error
 - Time-consuming
 - Difficult to track changes and maintain consistency
 
-#  What exactly is Infrastructure as Code anyway?
+# What exactly is Infrastructure as Code anyway? {background-image="assets/background.png"}
 
 ::: {.notes}
 Picture this: instead of manually clicking through endless setup screens or running commands till your fingers hurt, you write a few lines of code, hit "run," and voila! Your entire infrastructure springs to life. That's IaC in a nutshell.
+
 Gone are the days of "Bob's the only one who knows how to set up the staging environment" or "Why does production look different from dev?" With IaC, your infrastructure becomes as manageable as your application code. Version control? Check. Reproducibility? You bet. Collaboration? Absolutely!
 :::
 
-# Why should you care?
+# Why should you care?{background-image="assets/background.png"}
 - Consistency across environments (dev, staging, prod)
 - Faster deployment and scalability
 - Cost savings
 - Easily version-controlled via Git
 
-# IaC Tools {.nostretch background-transition="slide"}
+# IaC Tools {.nostretch background-transition="slide" background-image="assets/background.png"}
 
 ![](assets/iac-tools.png){fig-align="center"}
 
-# Here's how it works:
+::: {.notes}
+- Terraform: Cloud-agnostic tool, declarative, infrastructure provisioning.
+- AWS CloudFormation: AWS-specific, declarative, tightly integrated with AWS.
+- Ansible: Configuration management, can also be used for infrastructure automation, imperative.
+- Pulumi: Uses real programming languages for IaC, supports multiple clouds.
+:::
+
+# Here's how it works:{background-image="assets/background.png"}
 
 1. You write code describing your infrastructure.
 2. Terraform says, "Cool, here's what I'm gonna do."
 3. You say "yes", and Terraform makes it happen.
 
 ## Show me the code!
-```{.tf code-line-numbers="|1|5"}
+```{.hcl code-line-numbers="|1|5"}
 provider "aws" {
   region = "us-west-2"
 }
@@ -52,6 +71,55 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
 }
 ```
+::: {.notes}
+- Provider:
+  - Interacts with a cloud service (i.e. GCP, AWS, Azure)
+  - Affects change in a cloud service (i.e. creating/destroying resources) using the service’s API
+
+- Resource:
+  - An infrastructure component
+  - i.e. VMs, Networks, Containers, Hard Drives, Storage Buckets
+:::
+
+## More code!
+```{.hcl code-line-numbers="|1-2|13-19"}
+module "ec2-test" {
+  source = "terraform-aws-modules/ec2-instance/aws"
+
+  name = "ec2-test"
+
+  ami                    = "ami-078c1149d8ad719a7"
+  instance_type          = "m6a.2xlarge"
+  key_name               = "kobiton-test-devops"
+  monitoring             = false
+  vpc_security_group_ids = ["sg-035917cfc304b6e4c"]
+  subnet_id              = "subnet-024ca33484e1eac99"
+  enable_volume_tags = false
+  root_block_device = [
+    {
+      encrypted   = false
+      volume_type = "gp3"
+      volume_size = 100
+    },
+  ]
+}
+```
+
+# {#demo .nostretch background-color="#030525" background-transition="slide"}
+
+:::: {.columns .v-center-container}
+
+::: {.column style="width: 40%; text-align: center; font-size: 200%"}
+**MOAR CODE!!!**
+:::
+
+::: {.column width="60%"}
+![](assets/unicorn.png){fig-align="center"}
+:::
+
+::::
+
+## Demo content
 
 # Thank you
 

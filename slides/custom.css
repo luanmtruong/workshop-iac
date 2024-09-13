@@ -8,13 +8,16 @@
 .v-center-container > .column {
     vertical-align: middle;
 }
+ .reveal h1.title {
+   opacity: 0;
+}
 .reveal .slide h1 {
-  font-size: 1.3em;
+  /*font-size: 1.3em;*/
   line-height: 1em;
 }
 .reveal .slides section ul,
 .reveal .slides section ul li {
-    line-height: 1em; /* Adjust this value as needed */
+  line-height: 1em; /* Adjust this value as needed */
 }
 
 .reveal .slides section * {
@@ -22,6 +25,15 @@
 }
 
 .reveal .slides section .fragment {
-    margin-bottom: -30px; /* Reduce or remove bottom margin */
-    padding-bottom: 0; /* Reduce or remove bottom padding */
+  margin-bottom: -30px; /* Reduce or remove bottom margin */
+  padding-bottom: 0; /* Reduce or remove bottom padding */
+}
+
+.reveal .slide-logo {
+  max-height: 3rem !important;
+  background-color: #31c0f3;
+}
+
+.reveal.has-dark-background .slide-logo {
+  display: none !important;
 }
