@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  DAGGER_VERSION: 0.13.0
+
 jobs:
   render:
     name: Render
@@ -15,24 +18,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Nix
-        uses: cachix/install-nix-action@V28
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-
       - name: Set up Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Set up magic Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
-
-      - name: Prepare Nix shell
-        run: nix develop --impure .#ci
-
-      - name: Render
-        run: nix develop --impure .#ci -c quarto render slides/ --site-url ${{ steps.pages.outputs.base_url }}
+      - name: Pipeline
+        uses: dagger/dagger-for-github@e49f5bfe7f9a3593f38b9d7391f110d6dff48f94 # v6.8.0
+        with:
+          version: ${{ env.DAGGER_VERSION }}
+          verb: call
+          module: github.com/sagikazarmark/daggerverse/quarto@cba5bd028da6c751e3bd95b662cf23f42ebd5806
+          args: render --source="slides" --site-url ${{ steps.pages.outputs.base_url }} directory export --path="slides/_site"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
