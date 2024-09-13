@@ -25,9 +25,14 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      - name: Set up magic Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+
+      - name: Prepare Nix shell
+        run: nix develop --impure .#ci
+
       - name: Render
-        shell: nix develop -c bash {0}
-        run: quarto render slides/ --site-url ${{ steps.pages.outputs.base_url }}
+        run: nix develop --impure .#ci -c quarto render slides/ --site-url ${{ steps.pages.outputs.base_url }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

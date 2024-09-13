@@ -9,7 +9,6 @@ format:
     title-slide-attributes:
       data-background-image: preview.png
       data-background-transition: slide
-    logo: logo.png
 ---
 
 # Infrastructure provisioning {background-image="assets/background.png"}
