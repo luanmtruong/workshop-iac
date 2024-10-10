@@ -23,7 +23,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Pipeline
-        uses: dagger/dagger-for-github@e49f5bfe7f9a3593f38b9d7391f110d6dff48f94 # v6.8.0
+        uses: dagger/dagger-for-github@c69716804178d5dbc9cf4c2823d42a18f9284bd1 # v6.12.0
         with:
           version: ${{ env.DAGGER_VERSION }}
           verb: call
